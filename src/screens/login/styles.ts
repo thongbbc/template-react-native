@@ -2,33 +2,32 @@ import {
   StyleSheet,
 } from 'react-native';
 import colors from 'constants/colors';
+import { regularPadding } from 'constants/dimensions';
+import { getWidth } from '@utils/dimensions';
 
 const styles = StyleSheet.create({
-  container: { width: '100%', height: '100%', alignItems: 'center' },
+  container: {
+    flex: 1,
+    alignItems: 'center'
+  },
   buttonStyle: {
     height: 50,
-    borderRadius: 30,
-    backgroundColor: colors.buttonColor,
-    shadowColor: colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
+    borderWidth: 2,
+    backgroundColor: 'transparent',
+    borderColor: colors.white,
   },
-  buttonContainer: { width: '95%', borderRadius: 27, top: 40 },
+  scrollView: { flex: 1, width: '100%' },
+  contentContainer: { alignItems: 'center', height: '100%' },
+  buttonContainer: { width: '100%', borderRadius: 27, top: 50, paddingLeft: 5, paddingRight: 5 },
   inputStyle: {
-    borderWidth: 1,
-    borderColor: colors.grayLight,
-    borderRadius: 30,
-    padding: 5,
-    paddingLeft: 20,
-    paddingRight: 20
+    borderBottomWidth: 1,
+    borderColor: colors.white,
   },
-  iconInputStyle: { marginLeft: -2, marginRight: '5%' }
+  icon: { width: 25, height: 25 },
+  logo: { height: '40%', width: getWidth() - regularPadding * 2 },
+  form: { flex: 1.5, width: '100%', paddingLeft: regularPadding, paddingRight: regularPadding },
+  iconInputStyle: { marginLeft: 0, marginRight: '5%' },
+  errorText: { color: colors.white, left: 0 },
 });
 
 export default styles;

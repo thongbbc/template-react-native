@@ -69,12 +69,3 @@ const Header = (props: any) => {
 };
 
 export default Header;
-
-// Header.propTypes = {
-//   mainText: PropTypes.string,
-//   leftText: PropTypes.string,
-//   leftAction: PropTypes.func,
-//   rightText: PropTypes.string,
-//   rightAction: PropTypes.func,
-//   noShadow: PropTypes.bool,
-// };

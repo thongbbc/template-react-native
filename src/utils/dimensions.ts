@@ -1,5 +1,7 @@
-import {Dimensions} from 'react-native';
-
-export const getWidth = () => Dimensions.get('window').width;
-export const getHeight = () => Dimensions.get('window').height;
-export const getWidthAndHeight = () => Dimensions.get('window');
+import { Dimensions } from 'react-native';
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
+const widthHeight = Dimensions.get('window');
+export const getWidth = () => width;
+export const getHeight = () => height;
+export const getWidthAndHeight = () => widthHeight;

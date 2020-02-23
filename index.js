@@ -2,27 +2,25 @@
  * @format
  */
 
-import LaunchScreen from './src/screens/launch';
-import LoginScreen from './src/screens/login';
-import SignupScreen from './src/screens/signup';
+import LoadingPage from '@screens/loading';
+import LoginScreen from '@screens/login';
 import Home from '@screens/home';
+import SideMenu from '@screens/side-menu';
 import { Navigation } from "react-native-navigation";
 import { reduxProvider } from '@store/configureStore';
-import HOME_ICON from './src/assets/images/home_icon.png';
 import NavigationActionsService from './src/utils/navigation';
 import { store } from '@store/configureStore';
 import {
-  STATUS_NO_AUTH,
+  LOADING_PAGE,
   LOGIN_SCREEN,
-  SIGNUP_SCREEN,
-  LAUNCH_SCREEN,
   HOME_SCREEN,
-  NAVIGATION_ROOT_WITH_EPIC,
+  SIDE_MENU,
+  NAVIGATION_ROOT_WITH_SAGA,
 } from '@constants';
-Navigation.registerComponent(LAUNCH_SCREEN, () => reduxProvider(LaunchScreen), () => LaunchScreen);
+Navigation.registerComponent(LOADING_PAGE, () => reduxProvider(LoadingPage), () => LoadingPage);
 Navigation.registerComponent(LOGIN_SCREEN, () => reduxProvider(LoginScreen), () => LoginScreen);
-Navigation.registerComponent(SIGNUP_SCREEN, () => reduxProvider(SignupScreen), () => SignupScreen);
 Navigation.registerComponent(HOME_SCREEN, () => reduxProvider(Home), () => Home);
+Navigation.registerComponent(SIDE_MENU, () => reduxProvider(SideMenu), () => SideMenu);
 
 let currentScreen = '';
 
@@ -34,50 +32,28 @@ Navigation.events().registerAppLaunchedListener(() => {
       let root = null;
       currentScreen = navigation.name;
       if (currentScreen == HOME_SCREEN) {
-        let child = (name, icon, text = '') => {
-          return {
-            stack: {
-              children: [{
-                component: { name }
-              }],
-              options: {
-                ...NavigationActionsService.defaultOptions,
-                bottomTab: { text, icon }
-              }
-            }
-          }
-        }
         root = {
           sideMenu: {
             left: {
               component: {
-                name: HOME_SCREEN
+                name: SIDE_MENU
+
               },
             },
             center: {
-              bottomTabs: {
-                children: [
-                  child(HOME_SCREEN, HOME_ICON, 'Tab1'),
-                  child(HOME_SCREEN, HOME_ICON, 'Tab2'),
-                  child(HOME_SCREEN, HOME_ICON, 'Tab3'),
-                  child(HOME_SCREEN, HOME_ICON, 'Tab3'),
-                ],
-              }
+              stack: {
+                children: [{
+                  component: {
+                    name: HOME_SCREEN,
+                  }
+                }],
+                options: NavigationActionsService.defaultOptions
+              },
             },
             // animationType: 'slide-and-scale', // defaults to none if not provided, options are 'parallax', 'door', 'slide', or 'slide-and-scale'    
             // openGestureMode: 'entireScreen' | 'bezel'
           }
         }
-        // Navigation.showOverlay({
-        //   component: {
-        //     name: HOME_SCREEN,
-        //     options: {
-        //       overlay: {
-        //         interceptTouchOutside: true
-        //       }
-        //     }
-        //   }
-        // });
       } else {
         root = {
           stack: {
@@ -94,7 +70,7 @@ Navigation.events().registerAppLaunchedListener(() => {
     }
   });
   store.dispatch({
-    type: NAVIGATION_ROOT_WITH_EPIC,
-    payload: { name: LAUNCH_SCREEN },
+    type: NAVIGATION_ROOT_WITH_SAGA,
+    payload: { name: LOGIN_SCREEN },
   });
 });

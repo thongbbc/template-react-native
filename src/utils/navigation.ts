@@ -1,5 +1,6 @@
 import { Navigation } from "react-native-navigation";
 import { Keyboard } from "react-native";
+import { LOADING_PAGE } from "constants";
 
 class NavigationActionsService {
   private static stackNavigation: any[] = [];
@@ -22,12 +23,16 @@ class NavigationActionsService {
       animationType: 'door', // defaults to none if not provided, options are 'parallax', 'door', 'slide', or 'slide-and-scale'    
     },
   }
-  constructor(props?: any) {
-  }
 
   static initInstance(navigation: any): NavigationActionsService {
     if (!NavigationActionsService.instance) {
       NavigationActionsService.instance = new NavigationActionsService();
+      Navigation.events().registerComponentDidAppearListener(({ componentId, componentName, passProps }) => {
+        debugger
+        if (componentName != 'NAVIGATION_SIDE_MENU' && componentName != 'NAVIGATION_LOADING_PAGE') {
+          NavigationActionsService.navigation = componentId;
+        }
+      });
     }
     NavigationActionsService.navigation = navigation
     NavigationActionsService.stackNavigation.push(
@@ -66,13 +71,33 @@ class NavigationActionsService {
 
   };
 
+  public static showLoading = () => {
+    Navigation.showOverlay({
+      component: {
+        name: LOADING_PAGE,
+        options: {
+          overlay: {
+            interceptTouchOutside: true
+          }
+        }
+      }
+    });
+  }
+
+  public static hideLoading = () => {
+    Navigation.dismissOverlay(NavigationActionsService.navigation);
+  }
+
   public static pop = () => {
     Keyboard.dismiss();
     Navigation.pop(NavigationActionsService.navigation);
-    NavigationActionsService.stackNavigation.pop()
+  };
+
+  public static destroyScreen = () => {
+    NavigationActionsService.stackNavigation.pop();
     const maximumStackLength = NavigationActionsService.stackNavigation.length;
-    NavigationActionsService.navigation = NavigationActionsService.stackNavigation[maximumStackLength - 1]
-  }
+    NavigationActionsService.navigation = NavigationActionsService.stackNavigation[maximumStackLength - 1];
+  };
 }
 
 export default NavigationActionsService

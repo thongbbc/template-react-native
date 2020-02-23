@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 import authReducer, { AuthState } from "./auth.reducer";
 import navigationReducer from "./navigation.reducer";
-import { PayloadNavigationRoot } from "src/actions/navigation";
+import { NavigationState } from "@actions/navigation.action";
 
 export interface RootState {
   auth: AuthState
-  navigation: PayloadNavigationRoot,
+  navigation: NavigationState,
 }
 
 const rootState = {

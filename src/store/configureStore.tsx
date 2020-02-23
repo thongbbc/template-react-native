@@ -1,15 +1,16 @@
 import React from 'react';
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux';
-import rootReducer from '@reducers'
-import { rootEpic } from '@epics'
-import { createEpicMiddleware } from 'redux-observable'
-const epicMiddleware = createEpicMiddleware();
+import rootReducer from 'reducers'
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from 'sagas'
+
+const sagaMiddleware = createSagaMiddleware();
 const store = function configureStore() {
-  const store = createStore(rootReducer, applyMiddleware(epicMiddleware))
+  const store = createStore(rootReducer, applyMiddleware(sagaMiddleware))
   return store
 }();
-epicMiddleware.run(rootEpic)
+sagaMiddleware.run(rootSaga)
 
 export function reduxProvider(Component: any) {
   return (props: any) => (

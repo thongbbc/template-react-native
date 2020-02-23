@@ -5,6 +5,7 @@ const {
   height: SCREEN_HEIGHT,
 } = Dimensions.get('window');
 
+
 // based on iphone 5s's scale
 const scale = SCREEN_WIDTH / 320;
 
@@ -19,29 +20,30 @@ export function normalize(size: number) {
 
 const fontFamilies = {
   thin: {
-    // fontFamily: 'Roboto-Thin',
-    fontWeight: '100',
+    fontFamily: 'Roboto-Thin',
+    // fontWeight: '200',
   },
   bold: {
-    // fontFamily: 'Roboto-Bold',
-    fontWeight: '600'
+    fontFamily: 'Roboto-Bold',
+    // fontWeight: '800'
   },
   light: {
-    // fontFamily: 'Roboto-Light',
+    fontFamily: 'Roboto-Light',
   },
   medium: {
-    // fontFamily: 'Roboto-Medium',
-    fontWeight: '500',
+    fontFamily: 'Roboto-Medium',
+    // fontWeight: '700',
   },
   regular: {
-    // fontFamily: 'Roboto-Regular',
-    fontWeight: '400',
+    fontFamily: 'Roboto-Regular',
+    // fontWeight: '300',
   }
 }
 
 const fontSizes = {
-  text: normalize(14),
-  small: normalize(16),
+  smallest: normalize(12),
+  smaller: normalize(14),
+  small: normalize(17),
   title: normalize(25),
   medimum: normalize(40),
   large: normalize(50),

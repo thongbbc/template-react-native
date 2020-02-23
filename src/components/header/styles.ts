@@ -43,7 +43,7 @@ export default StyleSheet.create({
     width: width / 2
   },
   secondaryHeaderText: {
-    fontSize: fontSizes.text,
+    fontSize: fontSizes.smaller,
     fontWeight: 'bold',
     top: 10,
     left: 5,

@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
 
     elevation: 5,
   },
+  drawerIcon: { top: 8, width: 20, height: 20 },
   buttonContainer: { width: '95%', borderRadius: 27, top: 40 },
   inputStyle: {
     borderWidth: 1,
