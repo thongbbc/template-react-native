@@ -2,7 +2,8 @@ import { put, takeLatest, call } from 'redux-saga/effects';
 import {
   LOGOUT_WITH_SAGA,
   LOGIN_WITH_SAGA,
-  HOME_SCREEN
+  HOME_SCREEN,
+  LOGIN_SCREEN
 } from "constants/"
 import { PayloadAction } from 'types/types';
 import { PayloadLogin, resetAllState } from 'actions/auth.action';
@@ -10,6 +11,7 @@ import { navigationRootAction } from 'actions/navigation.action';
 import NavigationActionsService from '@utils/navigation';
 
 function* logout() {
+  yield put(navigationRootAction({ name: LOGIN_SCREEN }))
   yield put(resetAllState());
 }
 
