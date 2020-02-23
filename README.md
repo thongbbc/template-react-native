@@ -1,4 +1,4 @@
-# SignTalk-Mobile
+# React-native-Mobile
 
 ### Installation
 ```shell
@@ -10,4 +10,4 @@ cd ./ios & pod install
 - `npm run android` - runs the Android version of the app and attempts to open your app on a connected Android device or emulator
 
 ---
-Created by **HDWEBSOFT**
+Created by **TN**
