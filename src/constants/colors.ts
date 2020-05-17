@@ -1,4 +1,4 @@
-const backgroundMainTheme = ['#f2fcfe', '#C4E0E5', '#C4E0E5', '#C4E0E5'];
+const backgroundMainTheme = ['#ff9966', '#ff5e62'];
 const buttonColor = '#F2FEFE';
 const grayLight = 'rgba(0,0,0,0.1)';
 const gray = 'rgba(0,0,0,0.3)';

@@ -17,15 +17,15 @@ function* logout() {
 
 function* login(action: PayloadAction<string, PayloadLogin>) {
   const { email, password } = action.payload;
-  NavigationActionsService.showLoading();
+  // NavigationActionsService.showLoading();
   try {
-    const callApi = yield new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          status: 200
-        })
-      }, 3000);
-    })
+    // const callApi = yield new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     resolve({
+    //       status: 200
+    //     })
+    //   }, 3000);
+    // })
     yield put(navigationRootAction({ name: HOME_SCREEN }))
   } catch (err) {
 

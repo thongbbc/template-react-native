@@ -20,14 +20,13 @@ import { BackgroundComponents } from 'components/background.component';
 import colors from 'constants/colors';
 import { fontSizes, fontFamilies } from 'constants/fonts';
 import styles from './styles';
-import { ViewVertical } from 'components/viewBox.component';
+import { ViewVertical, ViewHorizontal } from 'components/viewBox.component';
 import Header from 'components/header/header.component';
 import NavigationActionsService from 'utils/navigation';
 import { useDispatch } from 'react-redux';
 import { loginWithSaga } from 'actions/auth.action';
-//IMAGE
-import EMAIL_ICON from 'assets/images/email.png'
-import PASSWORD_ICON from 'assets/images/password.png'
+import Icon from 'react-native-vector-icons/Entypo';
+import Text from '@components/text.component';
 
 interface LoginProps {
   componentId: any
@@ -39,13 +38,11 @@ export interface SubmitFormLogin {
 
 const LoginScreen = (props: LoginProps) => {
   const emailRef: any = useRef(null);
-  const passwordRef: any = useRef(null);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     NavigationActionsService.initInstance(props.componentId);
-    return () => NavigationActionsService.destroyScreen();
   }, []);
 
   const submit = (values: SubmitFormLogin) => {
@@ -70,6 +67,27 @@ const LoginScreen = (props: LoginProps) => {
               Keyboard.dismiss();
             }}
             style={styles.container}>
+              <ViewVertical style = {{
+                position: 'absolute',
+                width: 0,
+                height: 0,
+                borderLeftWidth: 25,
+                borderRightWidth: 25,
+                borderBottomWidth: 40,
+                marginTop: 40,
+                right: -10,
+                borderStyle: 'solid',
+                backgroundColor: 'transparent',
+                borderLeftColor: 'transparent',
+                borderRightColor: 'transparent',
+                borderBottomColor: 'rgba(255,255,255,0.6)',
+                transform: [{ rotate: '-90deg'}]
+              }}/>
+              <ViewHorizontal>
+                <Text style={{fontSize: fontSizes.superHero, color: colors.white, left: -50, ...fontFamilies.light, transform: [{ rotate: '-90deg'}]}}>M</Text>
+                <Text style={{fontSize: fontSizes.hero, color: 'white', top: 5, left: -50, ...fontFamilies.thin}}>y</Text>
+              </ViewHorizontal>
+              <Text style={{fontSize: fontSizes.large, color: 'white', left: 60, top: -95, ...fontFamilies.thin}}>sms</Text>
           </ViewVertical>
           <Formik
             initialValues={{ email: '', password: '' }}
@@ -77,18 +95,13 @@ const LoginScreen = (props: LoginProps) => {
             validationSchema={yup.object().shape({
               email: yup
                 .string()
-                .email('Email must be a valid email')
-                .required('Email must not empty'),
-              password: yup
-                .string()
-                .min(6, 'Password must be at least 6 characters')
-                .required('Password must not empty'),
+                .required('Name must not empty'),
             })}
           >
             {({ handleSubmit, values, errors, isValid, setValues }) => (
               <ViewVertical style={styles.form}>
                 <Input
-                  placeholder='Email Address'
+                  placeholder='Name'
                   underlineColorAndroid='rgba(0,0,0,0)'
                   autoCorrect={false}
                   inputStyle={{ color: colors.white }}
@@ -102,27 +115,7 @@ const LoginScreen = (props: LoginProps) => {
                   inputContainerStyle={styles.inputStyle}
                   leftIconContainerStyle={styles.iconInputStyle}
                   errorStyle={styles.errorText}
-                  leftIcon={<Image style={styles.icon} source={EMAIL_ICON} />}
-                />
-                <Input
-                  placeholder='Password'
-                  ref={passwordRef}
-                  errorMessage={errors.password}
-                  autoCorrect={false}
-                  inputStyle={{ color: colors.white }}
-                  onFocus={() => passwordRef.current.focus()}
-                  placeholderTextColor={colors.white}
-                  secureTextEntry={true}
-                  autoCapitalize='none'
-                  underlineColorAndroid='rgba(0,0,0,0)'
-                  value={values.password}
-                  onChangeText={(field: string) => setValues({ ...values, password: field })}
-                  containerStyle={{ marginTop: 20 }}
-                  inputContainerStyle={styles.inputStyle}
-                  leftIconContainerStyle={styles.iconInputStyle}
-                  errorStyle={styles.errorText}
-                  leftIcon={<Image style={styles.icon} source={PASSWORD_ICON} />}
-
+                  leftIcon={<Icon color='white' size={30} style={styles.icon} name='user' />}
                 />
                 <Button
                   onPress={() => {
@@ -131,7 +124,7 @@ const LoginScreen = (props: LoginProps) => {
                   titleStyle={{ fontSize: fontSizes.small, color: colors.white, ...fontFamilies.bold }}
                   buttonStyle={styles.buttonStyle}
                   containerStyle={styles.buttonContainer}
-                  title='LOGIN'
+                  title='Start With New App'
                 />
               </ViewVertical>)}
           </Formik>

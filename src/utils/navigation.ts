@@ -15,13 +15,13 @@ class NavigationActionsService {
         waitForRender: true
       }
     },
-    sideMenu: {
-      left: {
-        shouldStretchDrawer: false,
-        // animationVelocity: 200,
-      },
-      animationType: 'door', // defaults to none if not provided, options are 'parallax', 'door', 'slide', or 'slide-and-scale'    
-    },
+    // sideMenu: {
+    //   left: {
+    //     shouldStretchDrawer: false,
+    //     // animationVelocity: 200,
+    //   },
+    //   // animationType: 'door', // defaults to none if not provided, options are 'parallax', 'door', 'slide', or 'slide-and-scale'    
+    // },
   }
 
   static initInstance(navigation: any): NavigationActionsService {
