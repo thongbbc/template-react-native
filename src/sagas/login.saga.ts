@@ -3,12 +3,14 @@ import {
   LOGOUT_WITH_SAGA,
   LOGIN_WITH_SAGA,
   HOME_SCREEN,
-  LOGIN_SCREEN
+  LOGIN_SCREEN,
+  CREATE_NEW_APP_WITH_SAGA,
 } from "constants/"
 import { PayloadAction } from 'types/types';
-import { PayloadLogin, resetAllState } from 'actions/auth.action';
+import { PayloadLogin, PayloadCreateNewApp, resetAllState } from 'actions/auth.action';
 import { navigationRootAction } from 'actions/navigation.action';
 import NavigationActionsService from '@utils/navigation';
+import BaseService from 'services';
 
 function* logout() {
   yield put(navigationRootAction({ name: LOGIN_SCREEN }))
@@ -17,7 +19,7 @@ function* logout() {
 
 function* login(action: PayloadAction<string, PayloadLogin>) {
   const { email, password } = action.payload;
-  // NavigationActionsService.showLoading();
+  NavigationActionsService.showLoading();
   try {
     // const callApi = yield new Promise((resolve, reject) => {
     //   setTimeout(() => {
@@ -33,9 +35,24 @@ function* login(action: PayloadAction<string, PayloadLogin>) {
   NavigationActionsService.hideLoading();
 }
 
+function* createNewApp(action: PayloadAction<string, PayloadCreateNewApp>) {
+  const { name } = action.payload;
+  NavigationActionsService.showLoading();
+  try {
+    const response = yield BaseService.instance.auth.createNewAppId({name})
+    const {_id} = response;
+    debugger
+    yield put(navigationRootAction({ name: HOME_SCREEN }))
+  } catch (err) {
+
+  }
+  NavigationActionsService.hideLoading();
+}
+
 function* loginSaga() {
   yield takeLatest(LOGOUT_WITH_SAGA, logout)
   yield takeLatest(LOGIN_WITH_SAGA, login)
+  yield takeLatest(CREATE_NEW_APP_WITH_SAGA, createNewApp)
 }
 
 export default loginSaga

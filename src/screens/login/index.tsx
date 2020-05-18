@@ -24,16 +24,15 @@ import { ViewVertical, ViewHorizontal } from 'components/viewBox.component';
 import Header from 'components/header/header.component';
 import NavigationActionsService from 'utils/navigation';
 import { useDispatch } from 'react-redux';
-import { loginWithSaga } from 'actions/auth.action';
+import { loginWithSaga, createNewAppWithSaga } from 'actions/auth.action';
 import Icon from 'react-native-vector-icons/Entypo';
 import Text from '@components/text.component';
 
 interface LoginProps {
   componentId: any
 };
-export interface SubmitFormLogin {
+export interface SubmitFormCreateNewApp {
   email: string;
-  password: string;
 }
 
 const LoginScreen = (props: LoginProps) => {
@@ -45,9 +44,10 @@ const LoginScreen = (props: LoginProps) => {
     NavigationActionsService.initInstance(props.componentId);
   }, []);
 
-  const submit = (values: SubmitFormLogin) => {
-    const { email, password } = values;
-    dispatch(loginWithSaga({ email, password }))
+  const submit = (values: SubmitFormCreateNewApp) => {
+    const { email } = values;
+    debugger
+    dispatch(createNewAppWithSaga({ name: email }))
   }
   return (
     <BackgroundComponents>
@@ -90,7 +90,7 @@ const LoginScreen = (props: LoginProps) => {
               <Text style={{fontSize: fontSizes.large, color: 'white', left: 60, top: -95, ...fontFamilies.thin}}>sms</Text>
           </ViewVertical>
           <Formik
-            initialValues={{ email: '', password: '' }}
+            initialValues={{ email: ''}}
             onSubmit={submit}
             validationSchema={yup.object().shape({
               email: yup

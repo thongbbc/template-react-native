@@ -85,7 +85,7 @@ const HomeScreen = (props: any) => {
             <Text style={{color: colors.black, fontSize: fontSizes.small, ...fontFamilies.regular, marginRight: 10}}>Name:</Text>
             <Text style={{color: colors.black, fontSize: fontSizes.small, ...fontFamilies.light}}>Nguyen Anh Thong</Text>
           </ViewHorizontal>
-          <ViewHorizontal style={{width: '100%', marginTop: 10}}>
+          <ViewHorizontal style={{width: '100%', marginTop: 5}}>
             <Text style={{color: colors.black, fontSize: fontSizes.small, ...fontFamilies.regular, marginRight: 10}}>AppId:</Text>
             <Text style={{color: colors.black, fontSize: fontSizes.small, ...fontFamilies.light}}>1321321321</Text>
           </ViewHorizontal>
