@@ -5,7 +5,7 @@ import colors from 'constants/colors';
 import { regularPadding } from '@constants/dimensions';
 
 const styles = StyleSheet.create({
-  container: { padding: regularPadding / 2, width: '100%', height: '100%', alignItems: 'center' },
+  container: { paddingHorizontal: regularPadding / 2, paddingVertical: regularPadding, width: '100%',  alignItems: 'center' },
   buttonStyle: {
     height: 50,
     borderWidth: 2,
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
   scrollView: { flex: 1, width: '100%' },
   contentContainer: { alignItems: 'center', height: '100%' },
-  buttonContainer: { width: '100%', borderRadius: 27, top: 50, paddingLeft: 5, paddingRight: 5 },
+  buttonContainer: { width: '105%', borderRadius: 27, marginTop: 10, paddingLeft: 5, paddingRight: 5 },
   drawerIcon: { top: 8, width: 20, height: 20 },
   inputStyle: {
     borderWidth: 1,

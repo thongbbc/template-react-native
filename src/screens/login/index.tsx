@@ -62,33 +62,6 @@ const LoginScreen = (props: LoginProps) => {
           keyboardShouldPersistTaps='handled'
           contentContainerStyle={styles.contentContainer}
         >
-          <ViewVertical
-            onPress={() => {
-              Keyboard.dismiss();
-            }}
-            style={styles.container}>
-              <ViewVertical style = {{
-                position: 'absolute',
-                width: 0,
-                height: 0,
-                borderLeftWidth: 25,
-                borderRightWidth: 25,
-                borderBottomWidth: 40,
-                marginTop: 40,
-                right: -10,
-                borderStyle: 'solid',
-                backgroundColor: 'transparent',
-                borderLeftColor: 'transparent',
-                borderRightColor: 'transparent',
-                borderBottomColor: 'rgba(255,255,255,0.6)',
-                transform: [{ rotate: '-90deg'}]
-              }}/>
-              <ViewHorizontal>
-                <Text style={{fontSize: fontSizes.superHero, color: colors.white, left: -50, ...fontFamilies.light, transform: [{ rotate: '-90deg'}]}}>M</Text>
-                <Text style={{fontSize: fontSizes.hero, color: 'white', top: 5, left: -50, ...fontFamilies.thin}}>y</Text>
-              </ViewHorizontal>
-              <Text style={{fontSize: fontSizes.large, color: 'white', left: 60, top: -95, ...fontFamilies.thin}}>sms</Text>
-          </ViewVertical>
           <Formik
             initialValues={{ email: ''}}
             onSubmit={submit}
@@ -100,6 +73,30 @@ const LoginScreen = (props: LoginProps) => {
           >
             {({ handleSubmit, values, errors, isValid, setValues }) => (
               <ViewVertical style={styles.form}>
+                <ViewVertical
+                  style={{alignItems: 'center'}}>
+                    <ViewVertical style = {{
+                      position: 'absolute',
+                      width: 0,
+                      height: 0,
+                      borderLeftWidth: 20,
+                      borderRightWidth: 20,
+                      borderBottomWidth: 30,
+                      marginTop: '13%',
+                      left: '57%',
+                      borderStyle: 'solid',
+                      backgroundColor: 'transparent',
+                      borderLeftColor: 'transparent',
+                      borderRightColor: 'transparent',
+                      borderBottomColor: 'rgba(255,255,255,0.6)',
+                      transform: [{ rotate: '-90deg'}]
+                    }}/>
+                    <ViewHorizontal>
+                      <Text style={{fontSize: fontSizes.superHero, color: colors.white, left: -50, ...fontFamilies.light, transform: [{ rotate: '-90deg'}]}}>M</Text>
+                      <Text style={{fontSize: fontSizes.hero, color: 'white', top: '1%', left: '-30%', ...fontFamilies.thin}}>y</Text>
+                    </ViewHorizontal>
+                    <Text style={{fontSize: fontSizes.large, color: 'white', left: '15%', top: '-41%', ...fontFamilies.thin}}>sms</Text>
+                </ViewVertical>
                 <Input
                   placeholder='Name'
                   underlineColorAndroid='rgba(0,0,0,0)'

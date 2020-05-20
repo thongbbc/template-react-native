@@ -10,6 +10,7 @@ enum RequestMethod {
   PATCH = 'PATCH',
   GET = 'GET',
 }
+const IS_SETUP = 'IS_SETUP'
 
 const listMenu: Array<Menu> = Array({
   icon: AVAILABLE_JOB_ICON,
@@ -76,5 +77,6 @@ export {
   NAVIGATION_ROOT_WITH_SAGA,
   NAVIGATION_ROOT_SUCCESS,
   STATUS_NO_AUTH,
-  STATUS_AUTHED
+  STATUS_AUTHED,
+  IS_SETUP
 }

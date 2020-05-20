@@ -2,6 +2,8 @@
  * @format
  */
 
+import AsyncStorage from '@react-native-community/async-storage';
+
 import LoadingPage from '@screens/loading';
 import LoginScreen from '@screens/login';
 import Home from '@screens/home';
@@ -10,6 +12,7 @@ import { Navigation } from "react-native-navigation";
 import { reduxProvider } from '@store/configureStore';
 import NavigationActionsService from './src/utils/navigation';
 import { store } from '@store/configureStore';
+import {IS_SETUP} from 'constants/'
 import {
   LOADING_PAGE,
   LOGIN_SCREEN,
@@ -24,7 +27,7 @@ Navigation.registerComponent(SIDE_MENU, () => reduxProvider(SideMenu), () => Sid
 
 let currentScreen = '';
 
-Navigation.events().registerAppLaunchedListener(() => {
+Navigation.events().registerAppLaunchedListener(async () => {
   store.subscribe(() => {
     // handle navigation changed
     let { navigation } = store.getState();
@@ -69,8 +72,16 @@ Navigation.events().registerAppLaunchedListener(() => {
       Navigation.setRoot({ root });
     }
   });
-  store.dispatch({
-    type: NAVIGATION_ROOT_WITH_SAGA,
-    payload: { name: LOGIN_SCREEN },
-  });
+  const value = await AsyncStorage.getItem(IS_SETUP)
+  if (value) {
+    store.dispatch({
+      type: NAVIGATION_ROOT_WITH_SAGA,
+      payload: { name: HOME_SCREEN },
+    });
+  } else {
+    store.dispatch({
+      type: NAVIGATION_ROOT_WITH_SAGA,
+      payload: { name: LOGIN_SCREEN },
+    });
+  }
 });

@@ -11,6 +11,7 @@ import {
   StatusBar,
   FlatList,
   View,
+  ScrollView,
 } from 'react-native';
 import Text from 'components/text.component';
 import styles from './styles';
@@ -77,10 +78,12 @@ const HomeScreen = (props: any) => {
     <BackgroundComponents>
       <StatusBar barStyle="default" />
       <ViewVertical style={styles.container}>
-        <Header
+        {/* <Header
           noShadow={true}
-        />
-        <ViewVertical style={{backgroundColor: 'rgba(255,255,255,0.3)', width: '100%', padding: regularPadding, borderRadius: 5}}>
+        /> */}
+        <ViewVertical style={{backgroundColor: 'rgba(255,255,255,0.3)', width: '100%', 
+        paddingVertical: regularPadding/2,
+        paddingHorizontal: regularPadding, borderRadius: 5}}>
           <ViewHorizontal style={{width: '100%'}}>
             <Text style={{color: colors.black, fontSize: fontSizes.small, ...fontFamilies.regular, marginRight: 10}}>Name:</Text>
             <Text style={{color: colors.black, fontSize: fontSizes.small, ...fontFamilies.light}}>Nguyen Anh Thong</Text>
@@ -97,8 +100,8 @@ const HomeScreen = (props: any) => {
             data={Array(10).map(item => { phone: '12312312321'})}
             renderItem={({item, index}: any) => {
               return (
-                <ViewVertical style = {{ borderRadius: 5, marginBottom: 10, width: '100%', height: 80, backgroundColor: 'rgba(255,255,255,0.3)'}}>
-                  <ViewHorizontal style={{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
+                <ViewVertical style = {{ borderRadius: 5, marginBottom: 10, width: '100%', height: 40, backgroundColor: 'rgba(255,255,255,0.3)'}}>
+                  <ViewHorizontal style={{paddingHorizontal: regularPadding, width: '100%', height: '100%', alignItems: 'center'}}>
                     <Text style={{color: colors.black, fontSize: fontSizes.smaller, ...fontFamilies.regular, marginRight: 10}}>{index}.</Text>
                     <Text style={{color: colors.black, fontSize: fontSizes.smaller, ...fontFamilies.regular}}>1321321321</Text>
                   </ViewHorizontal>

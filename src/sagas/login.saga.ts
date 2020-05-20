@@ -5,12 +5,14 @@ import {
   HOME_SCREEN,
   LOGIN_SCREEN,
   CREATE_NEW_APP_WITH_SAGA,
+  IS_SETUP,
 } from "constants/"
 import { PayloadAction } from 'types/types';
 import { PayloadLogin, PayloadCreateNewApp, resetAllState } from 'actions/auth.action';
 import { navigationRootAction } from 'actions/navigation.action';
 import NavigationActionsService from '@utils/navigation';
 import BaseService from 'services';
+import AsyncStorage from '@react-native-community/async-storage';
 
 function* logout() {
   yield put(navigationRootAction({ name: LOGIN_SCREEN }))
@@ -21,13 +23,7 @@ function* login(action: PayloadAction<string, PayloadLogin>) {
   const { email, password } = action.payload;
   NavigationActionsService.showLoading();
   try {
-    // const callApi = yield new Promise((resolve, reject) => {
-    //   setTimeout(() => {
-    //     resolve({
-    //       status: 200
-    //     })
-    //   }, 3000);
-    // })
+
     yield put(navigationRootAction({ name: HOME_SCREEN }))
   } catch (err) {
 
@@ -41,7 +37,9 @@ function* createNewApp(action: PayloadAction<string, PayloadCreateNewApp>) {
   try {
     const response = yield BaseService.instance.auth.createNewAppId({name})
     const {_id} = response;
-    debugger
+    if (_id && name) {
+      yield AsyncStorage.setItem(IS_SETUP, 'success')
+    }
     yield put(navigationRootAction({ name: HOME_SCREEN }))
   } catch (err) {
 
