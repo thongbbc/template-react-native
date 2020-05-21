@@ -63,7 +63,7 @@ export default StyleSheet.create({
     width: 20,
   },
   cancelText: {
-    color: colors.cancel
+    color: colors.white
   },
   doneText: {
     color: colors.done

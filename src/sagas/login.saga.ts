@@ -38,6 +38,8 @@ function* createNewApp(action: PayloadAction<string, PayloadCreateNewApp>) {
     const response = yield BaseService.instance.auth.createNewAppId({name})
     const {_id} = response;
     if (_id && name) {
+      yield AsyncStorage.setItem('_id', _id);
+      yield AsyncStorage.setItem('name', name);
       yield AsyncStorage.setItem(IS_SETUP, 'success')
     }
     yield put(navigationRootAction({ name: HOME_SCREEN }))

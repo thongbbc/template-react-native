@@ -46,7 +46,6 @@ const LoginScreen = (props: LoginProps) => {
 
   const submit = (values: SubmitFormCreateNewApp) => {
     const { email } = values;
-    debugger
     dispatch(createNewAppWithSaga({ name: email }))
   }
   return (

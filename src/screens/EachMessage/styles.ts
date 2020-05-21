@@ -5,7 +5,7 @@ import colors from 'constants/colors';
 import { regularPadding } from '@constants/dimensions';
 
 const styles = StyleSheet.create({
-  container: { paddingHorizontal: regularPadding / 2, paddingVertical: regularPadding,flex: 1, width: '100%',  alignItems: 'center' },
+  container: { paddingHorizontal: regularPadding / 2, flex: 1, width: '100%',  alignItems: 'center' },
   buttonStyle: {
     height: 50,
     borderWidth: 2,

@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import LoadingPage from '@screens/loading';
 import LoginScreen from '@screens/login';
 import Home from '@screens/home';
+import EachMessage from '@screens/EachMessage';
 import SideMenu from '@screens/side-menu';
 import { Navigation } from "react-native-navigation";
 import { reduxProvider } from '@store/configureStore';
@@ -16,6 +17,7 @@ import {IS_SETUP} from 'constants/'
 import {
   LOADING_PAGE,
   LOGIN_SCREEN,
+  EACH_MESSAGE,
   HOME_SCREEN,
   SIDE_MENU,
   NAVIGATION_ROOT_WITH_SAGA,
@@ -24,6 +26,7 @@ Navigation.registerComponent(LOADING_PAGE, () => reduxProvider(LoadingPage), () 
 Navigation.registerComponent(LOGIN_SCREEN, () => reduxProvider(LoginScreen), () => LoginScreen);
 Navigation.registerComponent(HOME_SCREEN, () => reduxProvider(Home), () => Home);
 Navigation.registerComponent(SIDE_MENU, () => reduxProvider(SideMenu), () => SideMenu);
+Navigation.registerComponent(EACH_MESSAGE, () => reduxProvider(EachMessage), () => EachMessage);
 
 let currentScreen = '';
 

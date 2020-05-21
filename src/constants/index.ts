@@ -8,6 +8,7 @@ import { Menu } from 'types/types';
 enum RequestMethod {
   POST = 'POST',
   PATCH = 'PATCH',
+  PUT = 'PUT',
   GET = 'GET',
 }
 const IS_SETUP = 'IS_SETUP'
@@ -52,6 +53,7 @@ const LOGIN_WITH_SAGA = 'LOGIN_WITH_SAGA';
 const LOGIN_WITH_SAGA_SUCCESS = 'LOGIN_WITH_SAGA_SUCCESS';
 const LOGIN_WITH_SAGA_FAILED = 'LOGIN_WITH_SAGA_FAILED';
 const LOGOUT_WITH_SAGA = 'LOGOUT_WITH_SAGA';
+const EACH_MESSAGE = 'EACH_MESSAGE';
 
 
 export {
@@ -59,7 +61,7 @@ export {
 
   RESET_ALL_STATE,
   RequestMethod,
-
+  EACH_MESSAGE,
   LOADING_PAGE,
   LOGIN_SCREEN,
   HOME_SCREEN,

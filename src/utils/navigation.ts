@@ -28,7 +28,6 @@ class NavigationActionsService {
     if (!NavigationActionsService.instance) {
       NavigationActionsService.instance = new NavigationActionsService();
       Navigation.events().registerComponentDidAppearListener(({ componentId, componentName, passProps }) => {
-        debugger
         if (componentName != 'NAVIGATION_SIDE_MENU' && componentName != 'NAVIGATION_LOADING_PAGE') {
           NavigationActionsService.navigation = componentId;
         }
