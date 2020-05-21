@@ -98,6 +98,7 @@ const HomeScreen = (props: any) => {
           console.log("[BackgroundFetch] taskId: ", taskId);
           console.log("[BackgroundFetch]===========");
           await sendBackground();
+          await syncMessage();
           BackgroundFetch.finish(taskId);
         });
         // And with with #scheduleTask
