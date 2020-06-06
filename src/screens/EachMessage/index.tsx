@@ -69,12 +69,12 @@ const EachMessage = (props: any) => {
           transform: [{translateY: y}]
         }}>
           <ViewHorizontal style={{width: '80%'}}>
-            <Text style={{color: colors.black, fontSize: fontSizes.small, ...fontFamilies.regular, marginRight: 10}}>Name:</Text>
-            <Text style={{color: colors.black, fontSize: fontSizes.small, ...fontFamilies.light}}>{props.name}</Text>
+            <Text style={{color: colors.black, fontSize: fontSizes.smaller, ...fontFamilies.regular, marginRight: 10}}>Name:</Text>
+            <Text style={{color: colors.black, fontSize: fontSizes.smaller, ...fontFamilies.light}}>{props.name}</Text>
           </ViewHorizontal>
           <ViewHorizontal style={{width: '80%', marginTop: 5}}>
-            <Text style={{color: colors.black, fontSize: fontSizes.small, ...fontFamilies.regular, marginRight: 10}}>AppId:</Text>
-            <Text style={{color: colors.black, fontSize: fontSizes.small, ...fontFamilies.light}}>{props.appId}</Text>
+            <Text style={{color: colors.black, fontSize: fontSizes.smaller, ...fontFamilies.regular, marginRight: 10}}>AppId:</Text>
+            <Text style={{color: colors.black, fontSize: fontSizes.smaller, ...fontFamilies.light}}>{props.appId}</Text>
           </ViewHorizontal>
         </Animated.View>
         <Animated.FlatList

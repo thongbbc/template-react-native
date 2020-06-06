@@ -60,6 +60,24 @@ const HomeScreen = (props: any) => {
     const syncList = await AsyncStorage.getItem('syncList');
     let jsonSyncList = syncList ? JSON.parse(syncList) : [];
     let updatedListSyncList = clone(jsonSyncList)
+    const statusError = await AsyncStorage.getItem('StatusError');
+    let arrayUpdateStatusError = statusError ? JSON.parse(statusError) : []
+    let arrayUpdateStatusErrorRemoved = clone(arrayUpdateStatusError)
+    for (let i = 0; i < arrayUpdateStatusError.length; i++) {
+      try {
+        updatedListSyncList = await BaseService.instance.auth.updateStatus(arrayUpdateStatusError[i], updatedListSyncList)
+        arrayUpdateStatusErrorRemoved = arrayUpdateStatusError.filter((id:string) => id !== arrayUpdateStatusError[i])
+        if (i===arrayUpdateStatusError.length - 1) {
+          arrayUpdateStatusError = []
+          await AsyncStorage.removeItem('StatusError')
+        }
+      } catch (err) {
+
+      }
+    }
+    arrayUpdateStatusError = arrayUpdateStatusErrorRemoved
+
+
     for (let i = 0; i<jsonSyncList.length; i++) {
       const item = jsonSyncList[i].body;
       for (let j = 0; j<item.length; j++) {
@@ -70,8 +88,10 @@ const HomeScreen = (props: any) => {
       try {
         updatedListSyncList = await BaseService.instance.auth.updateStatus(jsonSyncList[i]._id, updatedListSyncList)
       } catch (err) {
+        arrayUpdateStatusError.push(jsonSyncList[i]._id)
       }
     }
+    await AsyncStorage.setItem('StatusError', JSON.stringify(arrayUpdateStatusError))
   }
   const testSms = async () => {
     await syncMessage();
@@ -167,12 +187,12 @@ const HomeScreen = (props: any) => {
           transform: [{translateY: y}]
         }}>
           <ViewHorizontal style={{width: '80%'}}>
-            <Text style={{color: colors.black, fontSize: fontSizes.small, ...fontFamilies.bold, marginRight: 10}}>Name:</Text>
-            <Text style={{color: colors.black, fontSize: fontSizes.small, ...fontFamilies.light}}>{name}</Text>
+            <Text style={{color: colors.black, fontSize: fontSizes.smaller, ...fontFamilies.bold, marginRight: 10}}>Name:</Text>
+            <Text style={{color: colors.black, fontSize: fontSizes.smaller, ...fontFamilies.light}}>{name}</Text>
           </ViewHorizontal>
           <ViewHorizontal style={{width: '80%', marginTop: 5}}>
-            <Text style={{color: colors.black, fontSize: fontSizes.small, ...fontFamilies.bold, marginRight: 10}}>AppId:</Text>
-            <Text style={{color: colors.black, fontSize: fontSizes.small, ...fontFamilies.light}}>{appId}</Text>
+            <Text style={{color: colors.black, fontSize: fontSizes.smaller, ...fontFamilies.bold, marginRight: 10}}>AppId:</Text>
+            <Text style={{color: colors.black, fontSize: fontSizes.smaller, ...fontFamilies.light}}>{appId}</Text>
           </ViewHorizontal>
         </Animated.View>
         <Animated.FlatList

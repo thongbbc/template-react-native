@@ -221,6 +221,10 @@ PODS:
     - ReactCommon/jscallinvoker (= 0.61.5)
   - ReactNativeNavigation (3.2.0):
     - React
+  - RNBackgroundFetch (3.0.5):
+    - React
+  - RNCAsyncStorage (1.10.3):
+    - React
   - RNVectorIcons (6.6.0):
     - React
   - Yoga (1.14.0)
@@ -255,6 +259,8 @@ DEPENDENCIES:
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeNavigation (from `../node_modules/react-native-navigation/ReactNativeNavigation.podspec`)
+  - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
+  - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -315,6 +321,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   ReactNativeNavigation:
     :podspec: "../node_modules/react-native-navigation/ReactNativeNavigation.podspec"
+  RNBackgroundFetch:
+    :path: "../node_modules/react-native-background-fetch"
+  RNCAsyncStorage:
+    :path: "../node_modules/@react-native-community/async-storage"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   Yoga:
@@ -348,9 +358,11 @@ SPEC CHECKSUMS:
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
   ReactNativeNavigation: aad255980f20cc5d2001ed37972319f3789fea70
+  RNBackgroundFetch: 3c0e0e0ba18e6dab3b03e2019a3a5a3f782f1df2
+  RNCAsyncStorage: 62559ca9a3e7790bac152a3e69bdd9ca349d37bd
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: 1b36b782c1f7b11aadaaf68763ab950b119b7b18
+PODFILE CHECKSUM: 5cfa4bd730ba8db567f9341e9977478dce85eb04
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1
