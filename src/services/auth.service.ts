@@ -59,7 +59,7 @@ export default class AuthService {
       await AsyncStorage.setItem('syncList', JSON.stringify(listSync));
       return listSync;
     } catch (err) {
-      return Promise.reject(err);
+      throw new Error(err);
     }
   };
 }
