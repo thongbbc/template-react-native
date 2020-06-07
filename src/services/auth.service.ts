@@ -47,13 +47,13 @@ export default class AuthService {
     }
   };
 
-  public async updateStatus(messId: string, listSync: any): Promise<any> {
+  public async updateStatus(messId: string, listSync: any, isDelete = false): Promise<any> {
     try {
       const _id = await AsyncStorage.getItem('_id');
       await this.baseService.request(
         RequestMethod.PUT,
        `/messages/${messId}/app_id/${_id}`,
-       {status: 'Completed'}
+       {status: isDelete ? 'Deleted' : 'Completed'}
       );
       listSync = listSync.filter((item: any) => item._id !== messId);
       await AsyncStorage.setItem('syncList', JSON.stringify(listSync));

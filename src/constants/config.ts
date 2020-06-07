@@ -1,10 +1,11 @@
 // CONFIG API
-const SSL = false;
-const PORT: number = 3000;
+const SSL = true;
+const PORT: number = 80;
 const PORT_WEB: number = 9999;
-const HOST = `${SSL ? 'https://' : 'http://'}sms.creta.tech`;
+const HOST = `${SSL ? 'https://' : 'http://'}sms-creta-tech.herokuapp.com`;
+// const HOST = `${SSL ? 'https://' : 'http://'}172.16.1.27`;
 const VERSION = '';
-const BASE_URL: string = HOST + `:${PORT}`;
+const BASE_URL: string = HOST + (PORT != 80 ? `:${PORT}` : '');
 const DEFAULT_TIMEOUT: number = 30000;
 
 export {

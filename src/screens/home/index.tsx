@@ -9,9 +9,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
   StatusBar,
-  FlatList,
-  View,
-  ScrollView,
+  Alert,
   Animated,
   PermissionsAndroid,
   TouchableOpacity,
@@ -40,15 +38,17 @@ import {clone} from 'lodash';
 const HomeScreen = (props: any) => {
   const scrollY = useRef(new Animated.Value(0)).current;
   const [HeaderHeight, setHeaderHeight] = useState(0)
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any[]>([]);
   const [name, setName] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [appId, setAppId] = useState('');
   const syncMessage = async () => {
     setLoading(true)
-    const response = await BaseService.instance.auth.syncMessages()
+    try {
+      const response = await BaseService.instance.auth.syncMessages()
+      setData(response)
+    } catch (err) {}
     setLoading(false)
-    setData(response)
   }
   const getInfo = async () => {
     const nameInfo = await AsyncStorage.getItem('name');
@@ -80,28 +80,52 @@ const HomeScreen = (props: any) => {
 
     for (let i = 0; i<jsonSyncList.length; i++) {
       const item = jsonSyncList[i].body;
+      let send = jsonSyncList[i].send;
       for (let j = 0; j<item.length; j++) {
         try {
-          await sendSms(item[j].phone_number, item[j].body)
+          if (send) {
+            await new Promise((resolve, reject) => {
+              setTimeout(async () => {
+                try {
+                  await sendSms(item[j].phone_number, item[j].body)
+                } catch (err) {
+                  send = undefined;
+                  updatedListSyncList = updatedListSyncList.map((it: any) => {
+                    if(it._id == jsonSyncList[i]._id) {
+                      return {
+                        ...it,
+                        send: false,
+                      }
+                    }
+                    return it;
+                  })
+                }  
+                resolve()
+              }, 3000)
+            })
+          }
         } catch (err) {}
       }
-      try {
-        updatedListSyncList = await BaseService.instance.auth.updateStatus(jsonSyncList[i]._id, updatedListSyncList)
-      } catch (err) {
-        arrayUpdateStatusError.push(jsonSyncList[i]._id)
+      if (send && jsonSyncList[i]._id) {
+        try {
+          updatedListSyncList = await BaseService.instance.auth.updateStatus(jsonSyncList[i]._id, updatedListSyncList)
+          setData(updatedListSyncList)
+        } catch (err) {
+          arrayUpdateStatusError.push(jsonSyncList[i]._id)
+        }
       }
     }
     await AsyncStorage.setItem('StatusError', JSON.stringify(arrayUpdateStatusError))
   }
   const testSms = async () => {
-    await syncMessage();
+    await BackgroundFetch.stop('com.foo.customtask')
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.SEND_SMS,
             {
-                title: 'YourProject App Sms Permission',
+                title: 'MySms App Sms Permission',
                 message:
-                'YourProject App needs access to your inbox ' +
+                'MySms App needs access to your inbox ' +
                 'so you can send messages in background.',
                 buttonNeutral: 'Ask Me Later',
                 buttonNegative: 'Cancel',
@@ -118,7 +142,6 @@ const HomeScreen = (props: any) => {
           console.log("[BackgroundFetch] taskId: ", taskId);
           console.log("[BackgroundFetch]===========");
           await sendBackground();
-          await syncMessage();
           BackgroundFetch.finish(taskId);
         });
         // And with with #scheduleTask
@@ -150,10 +173,62 @@ const HomeScreen = (props: any) => {
       alert('SMS permission denied');
     }
   }
+
+  const init = async () => {
+    const syncList = await AsyncStorage.getItem('syncList');
+    let jsonSyncList = syncList ? JSON.parse(syncList) : [];
+    setData(jsonSyncList)
+  }
+
+  const onPressSyncItem = async (item: any) => {
+    if (item.send == true) {
+      return;
+    }
+    const newData: any[] = data.map((it: any) => {
+      if(it._id == item._id) {
+        return {
+          ...it,
+          send: true
+        }
+      }
+      return it;
+    })
+    await AsyncStorage.setItem('syncList', JSON.stringify(newData));
+    setData(newData)
+    testSms()
+  }
+
+  const onPressDelete = async (item: any) => {
+    Alert.alert(
+      'Warning!',
+      'Are you sure delete this message?',
+      [
+        {
+          text: 'No',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel'
+        },
+        { 
+          text: 'Yes', onPress: async () => {
+            try {
+              let newData = data.filter((it: any) => item._id !== it._id);
+              await BaseService.instance.auth.updateStatus(item._id, data, true)
+              await AsyncStorage.setItem('syncList', JSON.stringify(newData));
+              setData(newData)
+            } catch (err) {
+              alert('Have some problem! Cannot remove this message!')
+            }
+          } 
+        }
+      ],
+      { cancelable: false }
+    );
+  }
+
   useEffect(() => {
     getInfo()
     NavigationActionsService.initInstance(props.componentId)
-    testSms()
+    init()
     return () => NavigationActionsService.destroyScreen();
   }, []);
 
@@ -211,10 +286,18 @@ const HomeScreen = (props: any) => {
             return (
               <TouchableOpacity onPress={() => {
                 NavigationActionsService.push(EACH_MESSAGE, {data: item.body, name, appId})
-              }} style = {{ borderRadius: 5, marginBottom: 10, width: '100%', height: 40, backgroundColor: 'rgba(255,255,255,0.3)'}}>
-                <ViewHorizontal style={{paddingHorizontal: regularPadding, width: '100%', height: '100%', alignItems: 'center'}}>
+              }} style = {{alignItems: 'center', flexDirection: 'row' , justifyContent: 'space-between', borderRadius: 5, marginBottom: 10, width: '100%', height: 50, backgroundColor: 'rgba(255,255,255,0.3)'}}>
+                <ViewHorizontal style={{paddingHorizontal: regularPadding, height: '100%', alignItems: 'center'}}>
                   <Text style={{color: colors.black, fontSize: fontSizes.smaller, ...fontFamilies.regular, marginRight: 10}}>List {index}.</Text>
                   <Text style={{color: colors.black, fontSize: fontSizes.smaller, ...fontFamilies.regular}}>{item.body.length} Tin</Text>
+                </ViewHorizontal>
+                <ViewHorizontal>
+                  {!item.send &&<TouchableOpacity onPress={onPressSyncItem.bind(undefined, item)} style = {{marginRight: regularPadding/2, height: 30, width: 60, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.background, borderRadius: 5}}>
+                    <Text style={{color: colors.black, fontSize: fontSizes.smaller, ...fontFamilies.bold}}>Send</Text>
+                  </TouchableOpacity>}
+                  <TouchableOpacity onPress={onPressDelete.bind(undefined, item)} style = {{marginRight: regularPadding/2, height: 30, width: 60, justifyContent: 'center', alignItems: 'center', backgroundColor: 'red', borderRadius: 5}}>
+                    <Text style={{color: colors.white, fontSize: fontSizes.smaller, ...fontFamilies.bold}}>Delete</Text>
+                  </TouchableOpacity>
                 </ViewHorizontal>
               </TouchableOpacity>
             )
