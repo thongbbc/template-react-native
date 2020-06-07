@@ -215,6 +215,7 @@ const HomeScreen = (props: any) => {
               await BaseService.instance.auth.updateStatus(item._id, data, true)
               await AsyncStorage.setItem('syncList', JSON.stringify(newData));
               setData(newData)
+              testSms()
             } catch (err) {
               alert('Have some problem! Cannot remove this message!')
             }
